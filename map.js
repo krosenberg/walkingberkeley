@@ -27,9 +27,29 @@ map.on("load", function () {
 					"line-cap": "round",
 				},
 				paint: {
-					"line-color": "#888",
-					"line-width": 6,
+					"line-color": "#4AA9C4",
+					"line-width": 4,
 				},
+			});
+		});
+
+	fetch("./bookcases.geojson")
+		.then((result) => result.json())
+		.then((data) => {
+			map.addSource("bookcases", {
+				type: "geojson",
+				data,
+			});
+
+			map.addLayer({
+				id: "bookcases",
+				type: "circle",
+				source: "bookcases",
+				paint: {
+					"circle-radius": 5,
+					"circle-color": "#4CD675",
+				},
+				filter: ["==", "$type", "Point"],
 			});
 		});
 });
