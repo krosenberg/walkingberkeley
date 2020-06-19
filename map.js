@@ -31,25 +31,26 @@ map.on("load", function () {
 					"line-width": 4,
 				},
 			});
-		});
+		})
+		.then(() => {
+			fetch("./bookcases.geojson")
+				.then((result) => result.json())
+				.then((data) => {
+					map.addSource("bookcases", {
+						type: "geojson",
+						data,
+					});
 
-	fetch("./bookcases.geojson")
-		.then((result) => result.json())
-		.then((data) => {
-			map.addSource("bookcases", {
-				type: "geojson",
-				data,
-			});
-
-			map.addLayer({
-				id: "bookcases",
-				type: "circle",
-				source: "bookcases",
-				paint: {
-					"circle-radius": 5,
-					"circle-color": "#4CD675",
-				},
-				filter: ["==", "$type", "Point"],
-			});
+					map.addLayer({
+						id: "bookcases",
+						type: "circle",
+						source: "bookcases",
+						paint: {
+							"circle-radius": 5,
+							"circle-color": "#4CD675",
+						},
+						filter: ["==", "$type", "Point"],
+					});
+				});
 		});
 });
